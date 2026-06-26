@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Use Docker Context') {
+            steps {
+                bat 'docker context use desktop-linux'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -14,6 +19,5 @@ pipeline {
                 bat 'docker run --rm log-monitor'
             }
         }
-
     }
 }
