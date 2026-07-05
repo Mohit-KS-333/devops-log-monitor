@@ -123,3 +123,4 @@ with open("reports/report.html", "w") as file:
     file.write(html)
 
 print("\nHTML report generated successfully!")
+# Retry Phase 3
