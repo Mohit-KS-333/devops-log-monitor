@@ -9,11 +9,16 @@ pipeline {
             }
         }
 
-        stage('Run Container') {
-            steps {
-                bat 'docker run --rm log-monitor'
-            }
-        }
+       stage('Run Container') {
+    steps {
+        bat '''
+        if not exist reports mkdir reports
+        docker run --rm ^
+        -v "%cd%\\reports:/app/reports" ^
+        log-monitor
+        '''
+    }
+}
 
         stage('Archive HTML Report') {
             steps {
