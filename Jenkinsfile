@@ -14,7 +14,7 @@ pipeline {
         bat '''
         if not exist reports mkdir reports
         docker run --rm ^
-        -v "%cd%\\reports:/app/reports" ^
+        -v "%WORKSPACE%\\reports:/app/reports" ^
         log-monitor
         '''
     }
