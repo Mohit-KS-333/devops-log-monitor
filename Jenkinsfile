@@ -4,10 +4,10 @@ pipeline {
     stages {
 
         stage('Build Docker Image') {
-            steps {
-                bat 'docker build -t log-monitor .'
-            }
-        }
+    steps {
+        bat "docker build -t log-monitor:${env.BUILD_NUMBER} -t log-monitor:latest ."
+    }
+}
 
         stage('Run Container') {
             steps {
