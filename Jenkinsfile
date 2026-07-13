@@ -25,6 +25,23 @@ pipeline {
                 archiveArtifacts artifacts: 'reports/report.html', fingerprint: true
             }
         }
+        stage('Push to Docker Hub') {
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'dockerhub',
+            usernameVariable: 'DOCKER_USER',
+            passwordVariable: 'DOCKER_PASS'
+        )]) {
+            bat """
+            docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+            docker tag log-monitor:${BUILD_NUMBER} %DOCKER_USER%/log-monitor:${BUILD_NUMBER}
+            docker tag log-monitor:latest %DOCKER_USER%/log-monitor:latest
+            docker push %DOCKER_USER%/log-monitor:${BUILD_NUMBER}
+            docker push %DOCKER_USER%/log-monitor:latest
+            """
+        }
+    }
+}
     }
 
     post {
